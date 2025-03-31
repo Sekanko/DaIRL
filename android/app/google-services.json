@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "582043496925",
+    "project_id": "dairl-89ae2",
+    "storage_bucket": "dairl-89ae2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582043496925:android:1b117eeaf20f12913a0634",
+        "android_client_info": {
+          "package_name": "pl.sekanko.dairl"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVKnwFvhnCF9SD4sLaTyhnuX81Q-Ru4J4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
