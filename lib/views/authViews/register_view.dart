@@ -1,8 +1,10 @@
 import 'package:dairl/constants/routes.dart';
 import 'package:dairl/services/auth/auth_exception.dart';
-import 'package:dairl/services/auth/auth_service.dart';
+import 'package:dairl/services/auth/bloc/auth_bloc.dart';
+import 'package:dairl/services/auth/bloc/auth_event.dart';
 import 'package:dairl/utilities/dialogs/error_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -57,12 +59,9 @@ class _RegisterViewState extends State<RegisterView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                await AuthService.firebase().createUser(
-                  email: email,
-                  password: password,
+                context.read<AuthBloc>().add(
+                  AuthEventRegister(email, password),
                 );
-                await AuthService.firebase().sendEmailVerification();
-                Navigator.of(context).pushNamed(verifyEmailRoute);
               } on WeakPasswordAuthException {
                 await showErrorDialog(context, 'Week password');
               } on EmailAlreadyInUseAuthException {
@@ -77,9 +76,7 @@ class _RegisterViewState extends State<RegisterView> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(
-                context,
-              ).pushNamedAndRemoveUntil(loginRoute, (route) => false);
+              context.read<AuthBloc>().add(AuthEventWantToLogIn());
             },
             child: Text('Already registered? Login here!'),
           ),

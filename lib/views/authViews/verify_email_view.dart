@@ -1,6 +1,9 @@
-import 'package:dairl/constants/routes.dart';
+import 'package:dairl/services/auth/auth_exception.dart';
 import 'package:dairl/services/auth/auth_service.dart';
+import 'package:dairl/services/auth/bloc/auth_bloc.dart';
+import 'package:dairl/services/auth/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});
@@ -30,10 +33,11 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
           ),
           TextButton(
             onPressed: () async {
-              await AuthService.firebase().logOut();
-              Navigator.of(
-                context,
-              ).pushNamedAndRemoveUntil(registerRoute, (route) => false);
+              try {
+                context.read<AuthBloc>().add(AuthEventLogOut());
+              } catch (e) {
+                throw GenericAuthException();
+              }
             },
             child: const Text("Go back"),
           ),

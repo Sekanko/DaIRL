@@ -50,19 +50,27 @@ class HomePage extends StatelessWidget {
             body: TextButton(
               onPressed: () {
                 AuthService.firebase().logOut();
-                Navigator.of(
-                  context,
-                ).pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                context.read<AuthBloc>().add(AuthEventLogOut());
               },
               child: Text("Logout"),
             ),
           );
         } else if (state is AuthStateNeedsVerification) {
           return const VerifyEmailView();
-        } else if (state is AuthStateLoggedOut) {
+        } else if (state is AuthStateLoggedOut ||
+            state is AuthStateWantToLogIn) {
           return const LoginView();
+        } else if (state is AuthStateWantToRegister) {
+          return const RegisterView();
         } else {
-          return const Scaffold(body: CircularProgressIndicator());
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [CircularProgressIndicator()],
+              ),
+            ),
+          );
         }
       },
     );

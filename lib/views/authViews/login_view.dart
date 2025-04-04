@@ -2,6 +2,7 @@ import 'package:dairl/services/auth/auth_exception.dart';
 import 'package:dairl/services/auth/bloc/auth_bloc.dart';
 import 'package:dairl/services/auth/bloc/auth_event.dart';
 import 'package:dairl/utilities/dialogs/error_dialog.dart';
+import 'package:dairl/views/authViews/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -70,9 +71,7 @@ class _LoginViewState extends State<LoginView> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(
-                context,
-              ).pushNamedAndRemoveUntil(registerRoute, (route) => false);
+              context.read<AuthBloc>().add(AuthEventWantToRegister());
             },
             child: const Text('Not registered yet? Register here'),
           ),

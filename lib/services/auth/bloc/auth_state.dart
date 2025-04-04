@@ -34,3 +34,20 @@ class AuthStateLogoutFailure extends AuthState {
 
   const AuthStateLogoutFailure(this.exception);
 }
+
+class AuthStateRegistered extends AuthState {
+  const AuthStateRegistered();
+}
+
+class AuthStateRegisterFailure extends AuthState {
+  final Exception exception;
+  const AuthStateRegisterFailure(this.exception);
+}
+
+class AuthStateWantToRegister extends AuthState {
+  const AuthStateWantToRegister();
+}
+
+class AuthStateWantToLogIn extends AuthState {
+  const AuthStateWantToLogIn();
+}

@@ -42,5 +42,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthStateLogoutFailure(e));
       }
     });
+    // want to log in
+    on<AuthEventWantToLogIn>((event, emit) {
+      emit(AuthStateWantToLogIn());
+    });
+
+    // want to register
+    on<AuthEventWantToRegister>((event, emit) {
+      emit(AuthStateWantToRegister());
+    });
+
+    // register
+    on<AuthEventRegister>((event, emit) async {
+      try {
+        emit(AuthStateLoading());
+
+        final email = event.email;
+        final password = event.password;
+        await provider.createUser(email: email, password: password);
+
+        emit(AuthStateNeedsVerification());
+      } on Exception catch (e) {
+        emit(AuthStateRegisterFailure(e));
+      }
+    });
   }
 }
