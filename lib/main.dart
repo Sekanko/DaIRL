@@ -49,7 +49,6 @@ class HomePage extends StatelessWidget {
             ),
             body: TextButton(
               onPressed: () {
-                AuthService.firebase().logOut();
                 context.read<AuthBloc>().add(AuthEventLogOut());
               },
               child: Text("Logout"),
